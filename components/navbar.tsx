@@ -33,12 +33,20 @@ export async function Navbar() {
               <LogoutButton />
             </>
           ) : (
-            <Link
-              className="rounded-xl border border-white/70 bg-white px-3 py-1.5 text-[#780D16] hover:bg-white/90"
-              href="/login"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                className="rounded-xl border border-white/70 bg-white px-3 py-1.5 text-[#780D16] hover:bg-white/90"
+                href="/login"
+              >
+                Login
+              </Link>
+              <Link
+                className="rounded-xl border border-white/70 px-3 py-1.5 text-white hover:bg-white/15"
+                href="/register"
+              >
+                Registrieren
+              </Link>
+            </>
           )}
         </div>
       </nav>

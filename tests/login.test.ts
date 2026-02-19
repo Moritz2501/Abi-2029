@@ -7,8 +7,6 @@ describe("login", () => {
     const passwordHash = await bcrypt.hash(process.env.AUTH_PASSWORD ?? "secret", 10);
 
     const ok = await verifyLoginCredentials({
-      expectedUsername: process.env.AUTH_USERNAME ?? "admin",
-      username: process.env.AUTH_USERNAME ?? "admin",
       password: process.env.AUTH_PASSWORD ?? "secret",
       passwordHash,
     });
@@ -20,8 +18,6 @@ describe("login", () => {
     const passwordHash = await bcrypt.hash(process.env.AUTH_PASSWORD ?? "secret", 10);
 
     const ok = await verifyLoginCredentials({
-      expectedUsername: process.env.AUTH_USERNAME ?? "admin",
-      username: process.env.AUTH_USERNAME ?? "admin",
       password: "falsch",
       passwordHash,
     });

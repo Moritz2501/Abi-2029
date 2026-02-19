@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { env } from "@/lib/env";
 import { createSessionToken, SESSION_COOKIE_NAME } from "@/lib/auth";
-import { ensureFixedAccountSynced } from "@/lib/bootstrap-fixed-account";
 import { verifyLoginCredentials } from "@/lib/login-service";
 import { prisma } from "@/lib/prisma";
 import { isRateLimited } from "@/lib/rate-limit";
@@ -29,19 +27,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await ensureFixedAccountSynced();
-
     const user = await prisma.user.findUnique({
-      where: { username: env.AUTH_USERNAME },
+      where: { username: payload.username },
     });
 
     if (!user) {
-      return NextResponse.json({ error: "Account nicht initialisiert." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Ungültiger Benutzername oder Passwort." },
+        { status: 401 },
+      );
     }
 
     const valid = await verifyLoginCredentials({
-      expectedUsername: env.AUTH_USERNAME,
-      username: payload.username,
       password: payload.password,
       passwordHash: user.passwordHash,
     });
@@ -65,6 +62,6 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch {
-    return NextResponse.json({ error: "Login aktuell nicht möglich. Bitte später erneut versuchen." }, { status: 500 });
+    return NextResponse.json({ error: "Ungültige Eingabedaten." }, { status: 400 });
   }
 }
