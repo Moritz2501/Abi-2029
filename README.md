@@ -123,6 +123,7 @@ npm run vercel-build
 ```
 
 Dieser Befehl führt `prisma migrate deploy`, `prisma generate` und den Next-Build aus.
+Zusätzlich wird `seed` ausgeführt, damit der feste Login-Account und das Budget-Passwort sicher in der DB vorhanden sind.
 
 ### Uploads im Deployment
 Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion stattdessen Object Storage nutzen (z. B. S3/R2).
