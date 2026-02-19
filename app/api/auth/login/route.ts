@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   try {
     const payload = loginSchema.parse(await request.json());
     const ip = getRequestIp(request);
-    const rateKey = `${ip}:${env.AUTH_USERNAME}`;
+    const rateKey = `${ip}:${payload.username}`;
 
     if (isRateLimited(rateKey, 5, 15 * 60 * 1000)) {
       return NextResponse.json(
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     const valid = await verifyLoginCredentials({
       expectedUsername: env.AUTH_USERNAME,
-      username: env.AUTH_USERNAME,
+      username: payload.username,
       password: payload.password,
       passwordHash: user.passwordHash,
     });

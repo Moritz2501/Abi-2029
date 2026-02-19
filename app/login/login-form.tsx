@@ -13,6 +13,7 @@ type LoginFormProps = {
 export function LoginForm({ nextPath }: LoginFormProps) {
   const router = useRouter();
 
+  const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username, password }),
     });
 
     setLoading(false);
@@ -43,6 +44,16 @@ export function LoginForm({ nextPath }: LoginFormProps) {
   return (
     <Card title="Login">
       <form className="space-y-3" onSubmit={onSubmit}>
+        <FormField htmlFor="username" label="Benutzername">
+          <input
+            className="rounded-xl border border-[#780D16]/35 px-3 py-2"
+            id="username"
+            onChange={(event) => setUsername(event.target.value)}
+            required
+            value={username}
+          />
+        </FormField>
+
         <FormField htmlFor="password" label="Passwort">
           <input
             className="rounded-xl border border-[#780D16]/35 px-3 py-2"
