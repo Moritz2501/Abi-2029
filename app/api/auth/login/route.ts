@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/env";
 import { createSessionToken, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { ensureFixedAccountSynced } from "@/lib/bootstrap-fixed-account";
 import { verifyLoginCredentials } from "@/lib/login-service";
 import { prisma } from "@/lib/prisma";
 import { isRateLimited } from "@/lib/rate-limit";
@@ -27,6 +28,8 @@ export async function POST(request: NextRequest) {
         { status: 429 },
       );
     }
+
+    await ensureFixedAccountSynced();
 
     const user = await prisma.user.findUnique({
       where: { username: env.AUTH_USERNAME },
@@ -62,6 +65,6 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch {
-    return NextResponse.json({ error: "Ungültige Eingabedaten." }, { status: 400 });
+    return NextResponse.json({ error: "Login aktuell nicht möglich. Bitte später erneut versuchen." }, { status: 500 });
   }
 }
