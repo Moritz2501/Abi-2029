@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Alert } from "@/components/alert";
 import { Card } from "@/components/card";
 import { FormField } from "@/components/form-field";
@@ -11,8 +10,6 @@ type LoginFormProps = {
 };
 
 export function LoginForm({ nextPath }: LoginFormProps) {
-  const router = useRouter();
-
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,6 +23,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ username, password }),
     });
 
@@ -37,8 +35,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
       return;
     }
 
-    router.push(nextPath);
-    router.refresh();
+    window.location.assign(nextPath || "/");
   }
 
   return (
