@@ -45,7 +45,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
       <form className="space-y-3" onSubmit={onSubmit}>
         <FormField htmlFor="password" label="Passwort">
           <input
-            className="rounded-xl border border-black/20 px-3 py-2"
+            className="rounded-xl border border-[#780D16]/35 px-3 py-2"
             id="password"
             onChange={(event) => setPassword(event.target.value)}
             required
@@ -57,7 +57,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
         {error ? <Alert message={error} type="error" /> : null}
 
         <button
-          className="rounded-xl bg-black px-4 py-2 text-white disabled:opacity-60"
+          className="rounded-xl bg-[#780D16] px-4 py-2 text-white disabled:opacity-60"
           disabled={loading}
           type="submit"
         >

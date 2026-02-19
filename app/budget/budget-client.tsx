@@ -86,7 +86,7 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
   return (
     <div className="space-y-4">
       <Card title="Budgetübersicht">
-        <p className="text-sm text-black/70">Aktueller Kontostand</p>
+        <p className="text-sm text-[#780D16]/75">Aktueller Kontostand</p>
         <p className="mt-1 text-2xl font-semibold">{totalText}</p>
       </Card>
 
@@ -94,7 +94,7 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
         <form className="space-y-3" onSubmit={onSubmit}>
           <FormField htmlFor="amount" label="Betrag (EUR)">
             <input
-              className="rounded-md border border-black/20 px-3 py-2"
+              className="rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="amount"
               min={0.01}
               onChange={(event) => setAmount(event.target.value)}
@@ -107,7 +107,7 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
 
           <FormField htmlFor="note" label="Notiz (optional)">
             <input
-              className="rounded-md border border-black/20 px-3 py-2"
+              className="rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="note"
               onChange={(event) => setNote(event.target.value)}
               value={note}
@@ -116,7 +116,7 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
 
           <FormField htmlFor="budgetPassword" label="Budget-Passwort">
             <input
-              className="rounded-md border border-black/20 px-3 py-2"
+              className="rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="budgetPassword"
               onChange={(event) => setBudgetPassword(event.target.value)}
               required
@@ -129,7 +129,7 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
           {success ? <Alert message={success} type="success" /> : null}
 
           <button
-            className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-60"
+            className="rounded-xl bg-[#780D16] px-4 py-2 text-white disabled:opacity-60"
             disabled={loading}
             type="submit"
           >
@@ -141,14 +141,14 @@ export function BudgetClient({ initialBudget }: BudgetClientProps) {
       <Card title="Verlauf">
         <ul className="space-y-2">
           {budget.deposits.map((deposit) => (
-            <li className="rounded-md border border-black/10 p-3" key={deposit.id}>
+            <li className="rounded-xl border border-[#780D16]/20 p-3" key={deposit.id}>
               <p className="font-medium">{formatEuro(deposit.amountCents)}</p>
-              {deposit.note ? <p className="text-sm text-black/80">{deposit.note}</p> : null}
-              <p className="text-xs text-black/60">{new Date(deposit.createdAt).toLocaleString("de-DE")}</p>
+              {deposit.note ? <p className="text-sm text-[#780D16]/85">{deposit.note}</p> : null}
+              <p className="text-xs text-[#780D16]/65">{new Date(deposit.createdAt).toLocaleString("de-DE")}</p>
             </li>
           ))}
           {budget.deposits.length === 0 ? (
-            <li className="text-sm text-black/70">Noch keine Einzahlungen vorhanden.</li>
+            <li className="text-sm text-[#780D16]/70">Noch keine Einzahlungen vorhanden.</li>
           ) : null}
         </ul>
       </Card>

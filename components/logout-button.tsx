@@ -9,7 +9,7 @@ export function LogoutButton() {
 
   return (
     <button
-      className="rounded-xl border border-black/20 px-3 py-1.5 text-sm hover:bg-black/5 disabled:opacity-60"
+      className="rounded-xl border border-white/70 bg-white px-3 py-1.5 text-sm text-[#780D16] hover:bg-white/90 disabled:opacity-60"
       disabled={loading}
       onClick={async () => {
         setLoading(true);

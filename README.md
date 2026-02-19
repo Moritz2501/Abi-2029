@@ -10,10 +10,10 @@ Vollständige Next.js-Web-App mit:
 ## Tech-Stack
 - Frontend/Backend: Next.js (App Router) + TypeScript + Tailwind CSS
 - API: Route Handlers (`app/api/...`)
-- ORM/DB: Prisma + SQLite (lokal)
+- ORM/DB: Prisma + PostgreSQL (Neon empfohlen)
 - Validierung: zod
 - Auth: httpOnly Session-Cookie (JWT-signiert), serverseitig geprüft
-- Security: Security-Header per `middleware.ts`, Login-Rate-Limit, Upload-Validierung, SameSite-Cookies
+- Security: Security-Header per `proxy.ts`, Login-Rate-Limit, Upload-Validierung, SameSite-Cookies
 - Tests: Vitest
 
 ## Seiten
@@ -50,7 +50,8 @@ Vollständige Next.js-Web-App mit:
 In `.env`:
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
+DIRECT_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
 AUTH_USERNAME="admin"
 AUTH_PASSWORD="dein_login_passwort"
 BUDGET_PASSWORD="dein_budget_passwort"
@@ -78,16 +79,50 @@ UPLOAD_DIR="uploads"
   npm run format
   ```
 
-## Deployment (z. B. Vercel)
-### Wichtig zu SQLite
-SQLite-Dateien sind auf Serverless-Umgebungen oft nicht persistent. Für echtes Deployment wird Postgres empfohlen.
+## Deployment mit Vercel + Neon
 
-### Empfohlenes Vorgehen
-1. Managed Postgres bereitstellen (z. B. Neon, Supabase, Railway).
-2. Prisma auf Postgres umstellen (`provider = "postgresql"` in `prisma/schema.prisma`).
-3. `DATABASE_URL` in Vercel-Projektvariablen setzen.
-4. Migrationen im Deployment mit `prisma migrate deploy` ausführen.
-5. Alle ENV-Werte (`AUTH_USERNAME`, `AUTH_PASSWORD`, `BUDGET_PASSWORD`, `SESSION_SECRET`, `UPLOAD_DIR`) in Vercel setzen.
+### 1) Neon-Projekt anlegen
+1. In Neon ein neues Projekt erstellen.
+2. Datenbank (`neondb`) und User erstellen/prüfen.
+3. Unter Neon `Connection Details` die Verbindungs-URL kopieren.
+
+### 2) URLs in `.env` setzen
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
+DIRECT_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
+```
+
+Hinweis: Bei Neon kann `DIRECT_URL` in der Regel identisch zu `DATABASE_URL` sein.
+
+### 3) Lokal einmal gegen Postgres testen
+```bash
+npm install
+cp .env.example .env
+# DATABASE_URL + Passwörter in .env eintragen
+npm run prisma:generate
+npm run prisma:migrate -- --name init
+npm run seed
+npm run dev
+```
+
+### 4) Vercel konfigurieren
+1. Repo mit Vercel verbinden.
+2. In Vercel Environment Variables setzen:
+   - `DATABASE_URL`
+   - `DIRECT_URL`
+   - `AUTH_USERNAME`
+   - `AUTH_PASSWORD`
+   - `BUDGET_PASSWORD`
+   - `SESSION_SECRET`
+   - `UPLOAD_DIR`
+3. Build Command in Vercel setzen auf:
+
+```bash
+npm run vercel-build
+```
+
+Dieser Befehl führt `prisma migrate deploy`, `prisma generate` und den Next-Build aus.
 
 ### Uploads im Deployment
 Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion stattdessen Object Storage nutzen (z. B. S3/R2).
@@ -95,6 +130,7 @@ Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion 
 ## Nützliche Skripte
 - `npm run dev` – Development-Server
 - `npm run build` – Production-Build
+- `npm run vercel-build` – Vercel Build inkl. Prisma Migrate Deploy
 - `npm run start` – Production-Server lokal
 - `npm run prisma:migrate` – Migrationen lokal
 - `npm run prisma:generate` – Prisma Client generieren

@@ -59,16 +59,16 @@ export function GalleryClient({ initialImages }: GalleryClientProps) {
         <form className="space-y-3" onSubmit={onUpload}>
           <input
             accept="image/jpeg,image/png,image/webp"
-            className="rounded-md border border-black/20 p-2"
+            className="rounded-xl border border-[#780D16]/35 p-2"
             name="image"
             required
             type="file"
           />
-          <p className="text-xs text-black/60">Erlaubt: JPG, PNG, WEBP · Maximal 10 MB</p>
+          <p className="text-xs text-[#780D16]/65">Erlaubt: JPG, PNG, WEBP · Maximal 10 MB</p>
           {error ? <Alert message={error} type="error" /> : null}
           {success ? <Alert message={success} type="success" /> : null}
           <button
-            className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-60"
+            className="rounded-xl bg-[#780D16] px-4 py-2 text-white disabled:opacity-60"
             disabled={loading}
             type="submit"
           >
@@ -79,7 +79,7 @@ export function GalleryClient({ initialImages }: GalleryClientProps) {
 
       <Card title="Galerie">
         {images.length === 0 ? (
-          <p className="text-sm text-black/70">Noch keine Bilder vorhanden.</p>
+          <p className="text-sm text-[#780D16]/70">Noch keine Bilder vorhanden.</p>
         ) : (
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
             {images.map((image) => (
@@ -87,14 +87,14 @@ export function GalleryClient({ initialImages }: GalleryClientProps) {
                 <a href={`/api/uploads/${image.filename}`} rel="noreferrer" target="_blank">
                   <Image
                     alt={image.originalName}
-                    className="aspect-square w-full rounded-md border border-black/10 object-cover"
+                    className="aspect-square w-full rounded-xl border border-[#780D16]/20 object-cover"
                     height={200}
                     src={`/api/uploads/${image.filename}`}
                     unoptimized
                     width={200}
                   />
                 </a>
-                <p className="truncate text-xs text-black/70">{image.originalName}</p>
+                <p className="truncate text-xs text-[#780D16]/70">{image.originalName}</p>
               </li>
             ))}
           </ul>

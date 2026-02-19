@@ -105,7 +105,7 @@ export function AdminAnnouncementsClient({
         <form className="space-y-3" onSubmit={onSubmit}>
           <FormField htmlFor="title" label="Titel">
             <input
-              className="rounded-md border border-black/20 px-3 py-2"
+              className="rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="title"
               onChange={(event) => setTitle(event.target.value)}
               required
@@ -115,7 +115,7 @@ export function AdminAnnouncementsClient({
 
           <FormField htmlFor="body" label="Text">
             <textarea
-              className="min-h-28 rounded-md border border-black/20 px-3 py-2"
+              className="min-h-28 rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="body"
               onChange={(event) => setBody(event.target.value)}
               required
@@ -127,12 +127,12 @@ export function AdminAnnouncementsClient({
           {success ? <Alert message={success} type="success" /> : null}
 
           <div className="flex gap-2">
-            <button className="rounded-md bg-black px-4 py-2 text-white" type="submit">
+            <button className="rounded-xl bg-[#780D16] px-4 py-2 text-white" type="submit">
               {editingId ? "Aktualisieren" : "Erstellen"}
             </button>
             {editingId ? (
               <button
-                className="rounded-md border border-black/20 px-4 py-2"
+                className="rounded-xl border border-[#780D16]/35 px-4 py-2"
                 onClick={() => {
                   setEditingId(null);
                   setTitle("");
@@ -150,20 +150,20 @@ export function AdminAnnouncementsClient({
       <Card title="Alle Ankündigungen">
         <ul className="space-y-3">
           {announcements.map((entry) => (
-            <li className="rounded-md border border-black/10 p-3" key={entry.id}>
+            <li className="rounded-xl border border-[#780D16]/20 p-3" key={entry.id}>
               <h3 className="font-semibold">{entry.title}</h3>
-              <p className="mt-1 whitespace-pre-wrap text-sm text-black/80">{entry.body}</p>
-              <p className="mt-2 text-xs text-black/60">{new Date(entry.createdAt).toLocaleString("de-DE")}</p>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-[#780D16]/85">{entry.body}</p>
+              <p className="mt-2 text-xs text-[#780D16]/65">{new Date(entry.createdAt).toLocaleString("de-DE")}</p>
               <div className="mt-2 flex gap-2">
                 <button
-                  className="rounded-md border border-black/20 px-3 py-1 text-sm"
+                  className="rounded-xl border border-[#780D16]/35 px-3 py-1 text-sm"
                   onClick={() => startEdit(entry)}
                   type="button"
                 >
                   Bearbeiten
                 </button>
                 <button
-                  className="rounded-md border border-red-300 px-3 py-1 text-sm text-red-700"
+                  className="rounded-xl border border-[#780D16]/50 bg-[#780D16] px-3 py-1 text-sm text-white"
                   onClick={() => onDelete(entry.id)}
                   type="button"
                 >
@@ -173,7 +173,7 @@ export function AdminAnnouncementsClient({
             </li>
           ))}
           {announcements.length === 0 ? (
-            <li className="text-sm text-black/70">Noch keine Ankündigungen vorhanden.</li>
+            <li className="text-sm text-[#780D16]/70">Noch keine Ankündigungen vorhanden.</li>
           ) : null}
         </ul>
       </Card>

@@ -14,23 +14,23 @@ export default async function Home() {
     <div className="space-y-6">
       <Card>
         <h1 className="text-2xl font-bold">Abitur 2029 – Maria Wächtler Gymnasium</h1>
-        <p className="mt-2 text-sm text-black/70">
+        <p className="mt-2 text-sm text-[#780D16]/80">
           Willkommen im internen Portal für Kommunikation, Galerie, Budget und Ankündigungen.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
-          <Link className="rounded-md border border-black/20 px-3 py-1.5 hover:bg-black/5" href="/login">
+          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/login">
             {loggedIn ? "Zum Bereich" : "Login"}
           </Link>
           {loggedIn ? (
             <>
-              <Link className="rounded-md border border-black/20 px-3 py-1.5 hover:bg-black/5" href="/chat">
+              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/chat">
                 Chat öffnen
               </Link>
-              <Link className="rounded-md border border-black/20 px-3 py-1.5 hover:bg-black/5" href="/gallery">
+              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/gallery">
                 Galerie öffnen
               </Link>
-              <Link className="rounded-md border border-black/20 px-3 py-1.5 hover:bg-black/5" href="/budget">
+              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/budget">
                 Budget öffnen
               </Link>
             </>
@@ -40,14 +40,14 @@ export default async function Home() {
 
       <Card title="Neueste Ankündigungen">
         {announcements.length === 0 ? (
-          <p className="text-sm text-black/70">Noch keine Ankündigungen vorhanden.</p>
+          <p className="text-sm text-[#780D16]/70">Noch keine Ankündigungen vorhanden.</p>
         ) : (
           <ul className="space-y-3">
             {announcements.map((announcement) => (
-              <li className="rounded-lg border border-black/10 p-3" key={announcement.id}>
+              <li className="rounded-xl border border-[#780D16]/20 p-3" key={announcement.id}>
                 <h3 className="font-semibold">{announcement.title}</h3>
-                <p className="mt-1 whitespace-pre-wrap text-sm text-black/80">{announcement.body}</p>
-                <p className="mt-2 text-xs text-black/60">
+                <p className="mt-1 whitespace-pre-wrap text-sm text-[#780D16]/85">{announcement.body}</p>
+                <p className="mt-2 text-xs text-[#780D16]/65">
                   {new Date(announcement.createdAt).toLocaleString("de-DE")}
                 </p>
               </li>

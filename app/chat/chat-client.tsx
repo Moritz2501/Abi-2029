@@ -62,7 +62,7 @@ export function ChatClient({ initialMessages }: ChatClientProps) {
         <form className="space-y-3" onSubmit={onSubmit}>
           <FormField htmlFor="displayName" label="Name (optional)">
             <input
-              className="rounded-md border border-black/20 px-3 py-2"
+              className="rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="displayName"
               onChange={(event) => setDisplayName(event.target.value)}
               value={displayName}
@@ -71,7 +71,7 @@ export function ChatClient({ initialMessages }: ChatClientProps) {
 
           <FormField htmlFor="text" label="Nachricht">
             <textarea
-              className="min-h-24 rounded-md border border-black/20 px-3 py-2"
+              className="min-h-24 rounded-xl border border-[#780D16]/35 px-3 py-2"
               id="text"
               onChange={(event) => setText(event.target.value)}
               required
@@ -83,7 +83,7 @@ export function ChatClient({ initialMessages }: ChatClientProps) {
           {success ? <Alert message={success} type="success" /> : null}
 
           <button
-            className="rounded-md bg-black px-4 py-2 text-white disabled:opacity-60"
+            className="rounded-xl bg-[#780D16] px-4 py-2 text-white disabled:opacity-60"
             disabled={loading}
             type="submit"
           >
@@ -95,15 +95,15 @@ export function ChatClient({ initialMessages }: ChatClientProps) {
       <Card title="Pinnwand">
         <ul className="space-y-3">
           {messages.map((message) => (
-            <li className="rounded-md border border-black/10 p-3" key={message.id}>
+            <li className="rounded-xl border border-[#780D16]/20 p-3" key={message.id}>
               <p className="whitespace-pre-wrap">{message.text}</p>
-              <p className="mt-2 text-xs text-black/60">
+              <p className="mt-2 text-xs text-[#780D16]/65">
                 {(message.displayName || "Anonym")} · {new Date(message.createdAt).toLocaleString("de-DE")}
               </p>
             </li>
           ))}
           {messages.length === 0 ? (
-            <li className="text-sm text-black/70">Noch keine Nachrichten vorhanden.</li>
+            <li className="text-sm text-[#780D16]/70">Noch keine Nachrichten vorhanden.</li>
           ) : null}
         </ul>
       </Card>
