@@ -31,7 +31,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
 
     if (!response.ok) {
       const data = (await response.json().catch(() => ({}))) as { error?: string };
-      setError(data.error ?? "Login fehlgeschlagen.");
+      setError(data.error ?? "login fehlgeschlagen");
       return;
     }
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSessionToken, SESSION_COOKIE_NAME } from "@/lib/auth";
+import { ensureFixedAccountSynced } from "@/lib/bootstrap-fixed-account";
 import { verifyLoginCredentials } from "@/lib/login-service";
 import { prisma } from "@/lib/prisma";
 import { isRateLimited } from "@/lib/rate-limit";
@@ -17,6 +18,7 @@ function getRequestIp(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const payload = loginSchema.parse(await request.json());
+    await ensureFixedAccountSynced();
     const ip = getRequestIp(request);
     const rateKey = `${ip}:${payload.username}`;
 
@@ -32,10 +34,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { error: "Ungültiger Benutzername oder Passwort." },
-        { status: 401 },
-      );
+      return NextResponse.json({ error: "login fehlgeschlagen" }, { status: 401 });
     }
 
     const valid = await verifyLoginCredentials({
@@ -43,10 +42,7 @@ export async function POST(request: NextRequest) {
       passwordHash: user.passwordHash,
     });
     if (!valid) {
-      return NextResponse.json(
-        { error: "Ungültiger Benutzername oder Passwort." },
-        { status: 401 },
-      );
+      return NextResponse.json({ error: "Passwort Falsch" }, { status: 401 });
     }
 
     const token = await createSessionToken({ username: user.username });
@@ -62,6 +58,6 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch {
-    return NextResponse.json({ error: "Ungültige Eingabedaten." }, { status: 400 });
+    return NextResponse.json({ error: "login fehlgeschlagen" }, { status: 400 });
   }
 }
