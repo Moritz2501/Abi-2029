@@ -1,15 +1,9 @@
 import { NextResponse } from "next/server";
-import { requireApiAuth } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { depositSchema } from "@/lib/schemas";
 import { verifyBudgetPassword } from "@/lib/budget";
 
 export async function POST(request: Request) {
-  const auth = await requireApiAuth();
-  if (auth.response) {
-    return auth.response;
-  }
-
   try {
     const payload = depositSchema.parse(await request.json());
 

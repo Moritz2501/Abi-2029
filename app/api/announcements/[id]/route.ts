@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { requireApiAuth } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { announcementSchema } from "@/lib/schemas";
 
@@ -8,11 +7,6 @@ type Context = {
 };
 
 export async function PATCH(request: Request, context: Context) {
-  const auth = await requireApiAuth();
-  if (auth.response) {
-    return auth.response;
-  }
-
   const params = await context.params;
   const id = Number(params.id);
 
@@ -38,11 +32,6 @@ export async function PATCH(request: Request, context: Context) {
 }
 
 export async function DELETE(_request: Request, context: Context) {
-  const auth = await requireApiAuth();
-  if (auth.response) {
-    return auth.response;
-  }
-
   const params = await context.params;
   const id = Number(params.id);
 

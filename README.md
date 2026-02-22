@@ -1,7 +1,6 @@
 # Abitur 2029 – Maria Wächtler Gymnasium
 
 Vollständige Next.js-Web-App mit:
-- Login (genau ein Benutzerkonto)
 - Chat/Pinnwand
 - Galerie mit Bild-Upload (jpg/png/webp)
 - Budget-Verwaltung mit separatem Budget-Passwort
@@ -12,17 +11,15 @@ Vollständige Next.js-Web-App mit:
 - API: Route Handlers (`app/api/...`)
 - ORM/DB: Prisma + PostgreSQL (Neon empfohlen)
 - Validierung: zod
-- Auth: httpOnly Session-Cookie (JWT-signiert), serverseitig geprüft
-- Security: Security-Header per `proxy.ts`, Login-Rate-Limit, Upload-Validierung, SameSite-Cookies
+- Security: Security-Header per `proxy.ts`, Upload-Validierung
 - Tests: Vitest
 
 ## Seiten
 - `/` öffentliche Startseite + öffentliche Ankündigungen
-- `/login` Login für den festen Account
-- `/chat` geschützte Pinnwand
-- `/gallery` geschützte Galerie + Upload
-- `/budget` geschützte Budgetseite + Einzahlung mit Budget-Passwort
-- `/admin/announcements` geschützter CRUD-Bereich für Ankündigungen
+- `/chat` Pinnwand
+- `/gallery` Galerie + Upload
+- `/budget` Budgetseite + Einzahlung mit Budget-Passwort
+- `/admin/announcements` CRUD-Bereich für Ankündigungen
 
 ## Setup
 1. Dependencies installieren:
@@ -37,7 +34,7 @@ Vollständige Next.js-Web-App mit:
    ```bash
    npm run prisma:migrate -- --name init
    ```
-4. Seed ausführen (legt den einen Login-User + Budget-Passwort an):
+4. Seed ausführen (legt Budget-Passwort-Hash an):
    ```bash
    npm run seed
    ```
@@ -52,16 +49,12 @@ In `.env`:
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
 DIRECT_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
-AUTH_USERNAME="admin"
-AUTH_PASSWORD="dein_login_passwort"
 BUDGET_PASSWORD="dein_budget_passwort"
-SESSION_SECRET="lange-zufällige-geheime-zeichenkette"
 UPLOAD_DIR="uploads"
 ```
 
-## Login/Budget-Passwort ändern
-- Admin-Login ändern: `AUTH_USERNAME` und/oder `AUTH_PASSWORD` in `.env` ändern, danach `npm run seed` ausführen.
-- Budget-Passwort ändern: `BUDGET_PASSWORD` in `.env` ändern, danach `npm run seed` ausführen.
+## Budget-Passwort ändern
+- `BUDGET_PASSWORD` in `.env` ändern, danach `npm run seed` ausführen.
 
 `seed` aktualisiert vorhandene Hashes sicher (bcrypt), ohne Klartext in der DB.
 
@@ -111,10 +104,7 @@ npm run dev
 2. In Vercel Environment Variables setzen:
    - `DATABASE_URL`
    - `DIRECT_URL`
-   - `AUTH_USERNAME`
-   - `AUTH_PASSWORD`
    - `BUDGET_PASSWORD`
-   - `SESSION_SECRET`
    - `UPLOAD_DIR`
 3. Build Command in Vercel setzen auf:
 
@@ -123,7 +113,7 @@ npm run vercel-build
 ```
 
 Dieser Befehl führt `prisma migrate deploy`, `prisma generate` und den Next-Build aus.
-Zusätzlich wird `seed` ausgeführt, damit der feste Login-Account und das Budget-Passwort sicher in der DB vorhanden sind.
+Zusätzlich wird `seed` ausgeführt, damit das Budget-Passwort sicher in der DB vorhanden ist.
 
 ### Uploads im Deployment
 Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion stattdessen Object Storage nutzen (z. B. S3/R2).
@@ -135,7 +125,7 @@ Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion 
 - `npm run start` – Production-Server lokal
 - `npm run prisma:migrate` – Migrationen lokal
 - `npm run prisma:generate` – Prisma Client generieren
-- `npm run seed` – festen User + Budget-Secret setzen/aktualisieren
+- `npm run seed` – Budget-Secret setzen/aktualisieren
 - `npm run lint` – ESLint
 - `npm run test` – Vitest
 - `npm run format` / `npm run format:write` – Prettier

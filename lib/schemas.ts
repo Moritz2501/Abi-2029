@@ -5,11 +5,6 @@ export const loginSchema = z.object({
   password: z.string().min(1),
 });
 
-export const registerSchema = z.object({
-  username: z.string().min(3).max(40).regex(/^[a-zA-Z0-9_.-]+$/),
-  password: z.string().min(8).max(100),
-});
-
 export const announcementSchema = z.object({
   title: z.string().min(1).max(120),
   body: z.string().min(1).max(5000),

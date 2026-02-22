@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { requireApiAuth } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import {
   maxUploadSizeBytes,
@@ -8,11 +7,6 @@ import {
 import { buildStoredFileName, saveUploadedFile } from "@/lib/upload";
 
 export async function POST(request: Request) {
-  const auth = await requireApiAuth();
-  if (auth.response) {
-    return auth.response;
-  }
-
   const formData = await request.formData();
   const file = formData.get("image");
 

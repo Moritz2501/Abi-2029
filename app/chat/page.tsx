@@ -1,9 +1,7 @@
 import { ChatClient } from "@/app/chat/chat-client";
-import { requirePageAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function ChatPage() {
-  await requirePageAuth("/chat");
   const messages: Array<{
     id: number;
     text: string;

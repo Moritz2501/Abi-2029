@@ -1,9 +1,7 @@
 import { AdminAnnouncementsClient } from "@/app/admin/announcements/admin-announcements-client";
-import { requirePageAuth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminAnnouncementsPage() {
-  await requirePageAuth("/admin/announcements");
   const announcements: Array<{
     id: number;
     title: string;

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Card } from "@/components/card";
-import { isAuthenticated } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
@@ -8,7 +7,6 @@ export default async function Home() {
     orderBy: { createdAt: "desc" },
     take: 10,
   });
-  const loggedIn = await isAuthenticated();
 
   return (
     <div className="space-y-6">
@@ -19,22 +17,15 @@ export default async function Home() {
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
-          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/login">
-            {loggedIn ? "Zum Bereich" : "Login"}
+          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/chat">
+            Zum Bereich
           </Link>
-          {loggedIn ? (
-            <>
-              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/chat">
-                Chat öffnen
-              </Link>
-              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/gallery">
-                Galerie öffnen
-              </Link>
-              <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/budget">
-                Budget öffnen
-              </Link>
-            </>
-          ) : null}
+          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/gallery">
+            Galerie öffnen
+          </Link>
+          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/budget">
+            Budget öffnen
+          </Link>
         </div>
       </Card>
 
