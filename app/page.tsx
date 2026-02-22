@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Card } from "@/components/card";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const announcements = await prisma.announcement.findMany({
     orderBy: { createdAt: "desc" },
@@ -13,15 +15,12 @@ export default async function Home() {
       <Card>
         <h1 className="text-2xl font-bold">Abitur 2029 – Maria Wächtler Gymnasium</h1>
         <p className="mt-2 text-sm text-[#780D16]/80">
-          Willkommen im internen Portal für Kommunikation, Galerie, Budget und Ankündigungen.
+          Willkommen im internen Portal für Kommunikation, Budget und Ankündigungen.
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
           <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/chat">
             Zum Bereich
-          </Link>
-          <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/gallery">
-            Galerie öffnen
           </Link>
           <Link className="rounded-xl border border-[#780D16]/35 px-3 py-1.5 hover:bg-[#780D16]/5" href="/budget">
             Budget öffnen

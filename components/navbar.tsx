@@ -15,9 +15,6 @@ export async function Navbar() {
           <Link className="rounded-xl px-3 py-1.5 hover:bg-white/15" href="/chat">
             Chat
           </Link>
-          <Link className="rounded-xl px-3 py-1.5 hover:bg-white/15" href="/gallery">
-            Galerie
-          </Link>
           <Link className="rounded-xl px-3 py-1.5 hover:bg-white/15" href="/budget">
             Budget
           </Link>

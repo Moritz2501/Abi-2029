@@ -1,6 +1,8 @@
 import { ChatClient } from "@/app/chat/chat-client";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function ChatPage() {
   const messages: Array<{
     id: number;

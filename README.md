@@ -2,7 +2,6 @@
 
 Vollständige Next.js-Web-App mit:
 - Chat/Pinnwand
-- Galerie mit Bild-Upload (jpg/png/webp)
 - Budget-Verwaltung mit separatem Budget-Passwort
 - Admin-Bereich für Ankündigungen
 
@@ -11,13 +10,12 @@ Vollständige Next.js-Web-App mit:
 - API: Route Handlers (`app/api/...`)
 - ORM/DB: Prisma + PostgreSQL (Neon empfohlen)
 - Validierung: zod
-- Security: Security-Header per `proxy.ts`, Upload-Validierung
+- Security: Security-Header per `proxy.ts`
 - Tests: Vitest
 
 ## Seiten
 - `/` öffentliche Startseite + öffentliche Ankündigungen
 - `/chat` Pinnwand
-- `/gallery` Galerie + Upload
 - `/budget` Budgetseite + Einzahlung mit Budget-Passwort
 - `/admin/announcements` CRUD-Bereich für Ankündigungen
 
@@ -50,7 +48,6 @@ In `.env`:
 DATABASE_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
 DIRECT_URL="postgresql://USER:PASSWORD@ep-xxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
 BUDGET_PASSWORD="dein_budget_passwort"
-UPLOAD_DIR="uploads"
 ```
 
 ## Budget-Passwort ändern
@@ -105,7 +102,6 @@ npm run dev
    - `DATABASE_URL`
    - `DIRECT_URL`
    - `BUDGET_PASSWORD`
-   - `UPLOAD_DIR`
 3. Build Command in Vercel setzen auf:
 
 ```bash
@@ -114,9 +110,6 @@ npm run vercel-build
 
 Dieser Befehl führt `prisma migrate deploy`, `prisma generate` und den Next-Build aus.
 Zusätzlich wird `seed` ausgeführt, damit das Budget-Passwort sicher in der DB vorhanden ist.
-
-### Uploads im Deployment
-Lokale Dateispeicherung ist in Serverless oft nicht persistent. Für Produktion stattdessen Object Storage nutzen (z. B. S3/R2).
 
 ## Nützliche Skripte
 - `npm run dev` – Development-Server

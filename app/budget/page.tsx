@@ -1,6 +1,8 @@
 import { BudgetClient } from "@/app/budget/budget-client";
 import { getBudgetSummary } from "@/lib/budget";
 
+export const dynamic = "force-dynamic";
+
 export default async function BudgetPage() {
   const summary = await getBudgetSummary();
 
