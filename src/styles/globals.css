@@ -1,0 +1,185 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0f1e;
+  color: #e0e6ff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Liquid Glass Components */
+.glass {
+  @apply backdrop-blur-xl bg-glass-white border border-white/20 rounded-2xl shadow-glass;
+}
+
+.glass-lg {
+  @apply backdrop-blur-xl bg-glass-white border border-white/20 rounded-3xl shadow-glass;
+}
+
+.glass-sm {
+  @apply backdrop-blur-md bg-glass-white border border-white/15 rounded-xl shadow-glass;
+}
+
+.glass-glossy {
+  @apply glass relative overflow-hidden;
+}
+
+.glass-glossy::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass-glow {
+  @apply relative;
+}
+
+.glass-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top-right, rgba(109, 40, 217, 0.2), transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Glassmorphism Sidebar */
+.sidebar-glass {
+  @apply backdrop-blur-2xl bg-gradient-to-b from-accent-purple/10 to-dark-bg/50 border-r border-white/10;
+}
+
+/* Buttons */
+.btn-glass {
+  @apply glass px-6 py-3 rounded-full font-medium transition-all duration-300 hover:bg-glass-white/20 active:scale-95 relative overflow-hidden;
+}
+
+.btn-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glass:hover::before {
+  left: 100%;
+}
+
+.btn-gradient {
+  @apply relative inline-block overflow-hidden rounded-full;
+}
+
+.btn-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #6d28d9, #2d0a4e);
+  z-index: -1;
+}
+
+/* Input Fields */
+.input-glass {
+  @apply w-full px-4 py-3 bg-glass-white/5 border border-white/15 rounded-2xl text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:shadow-gl focus:ring-2 focus:ring-accent-purple/30 transition-all duration-300;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(109, 40, 217, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(109, 40, 217, 0.8);
+}
+
+/* Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(109, 40, 217, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(109, 40, 217, 0.6);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}

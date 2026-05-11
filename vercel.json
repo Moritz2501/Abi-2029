@@ -1,0 +1,29 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "20.x",
+  "env": [
+    {
+      "key": "DATABASE_URL",
+      "description": "PostgreSQL Connection String",
+      "type": "secret"
+    },
+    {
+      "key": "NEXTAUTH_SECRET",
+      "description": "NextAuth Secret Key",
+      "type": "secret"
+    },
+    {
+      "key": "NEXTAUTH_URL",
+      "description": "NextAuth URL",
+      "value": "https://${VERCEL_URL}"
+    },
+    {
+      "key": "ROOT_ADMIN_EMAIL",
+      "description": "Initial Root Admin Email",
+      "type": "secret"
+    }
+  ]
+}
