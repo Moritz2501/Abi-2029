@@ -26,7 +26,6 @@ export async function GET() {
     const users = await prisma.user.findMany({
       select: {
         id: true,
-        email: true,
         firstName: true,
         lastName: true,
         username: true,

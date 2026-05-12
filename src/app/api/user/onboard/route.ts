@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { prisma } from '@/lib/prisma';
-import { generateUsername, hashPassword } from '@/lib/auth-utils';
+import { generateUniqueUsername, hashPassword } from '@/lib/auth-utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +26,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const username = generateUsername(firstName, lastName);
+    if (password.length < 8) {
+      return NextResponse.json(
+        { message: 'Das Passwort muss mindestens 8 Zeichen lang sein' },
+        { status: 400 }
+      );
+    }
+
+    const username = await generateUniqueUsername(firstName, lastName);
     const hashedPassword = await hashPassword(password);
 
     const user = await prisma.user.update({
@@ -35,8 +42,9 @@ export async function POST(request: NextRequest) {
         firstName,
         lastName,
         username,
+        name: `${firstName} ${lastName}`,
         password: hashedPassword,
-        onboardingStatus: 'PENDING', // Admin must approve
+        onboardingStatus: 'PENDING',
       },
     });
 

@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
 // User Management
-export async function getUserByEmail(email: string) {
+export async function getUserByUsername(username: string) {
   return await prisma.user.findUnique({
-    where: { email },
+    where: { username },
   });
 }
 

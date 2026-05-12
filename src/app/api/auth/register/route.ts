@@ -1,37 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { hashPassword } from '@/lib/auth-utils';
+import { hashPassword, generateUniqueUsername } from '@/lib/auth-utils';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { firstName, lastName, password } = await request.json();
 
-    if (!email || !password) {
+    if (!firstName || !lastName || !password) {
       return NextResponse.json(
-        { message: 'E-Mail und Passwort erforderlich' },
+        { message: 'Vorname, Nachname und Passwort erforderlich' },
         { status: 400 }
       );
     }
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
+    if (password.length < 8) {
       return NextResponse.json(
-        { message: 'Diese E-Mail ist bereits registriert' },
-        { status: 409 }
+        { message: 'Das Passwort muss mindestens 8 Zeichen lang sein' },
+        { status: 400 }
       );
     }
 
-    // Hash password
+    const username = await generateUniqueUsername(firstName, lastName);
     const hashedPassword = await hashPassword(password);
 
-    // Create user
     const user = await prisma.user.create({
       data: {
-        email,
+        firstName,
+        lastName,
+        username,
+        name: `${firstName} ${lastName}`,
         password: hashedPassword,
         role: 'USER',
         onboardingStatus: 'PENDING',
@@ -39,7 +36,11 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: 'Registrierung erfolgreich', userId: user.id },
+      {
+        message: 'Registrierung erfolgreich',
+        userId: user.id,
+        username: user.username,
+      },
       { status: 201 }
     );
   } catch (error) {

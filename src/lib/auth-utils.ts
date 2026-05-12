@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import { prisma } from '@/lib/prisma';
 
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10);
@@ -12,9 +13,32 @@ export async function verifyPassword(
 }
 
 export function generateUsername(firstName: string, lastName: string): string {
-  const first = firstName.substring(0, 2).toUpperCase();
-  const last = lastName.substring(0, 2).toUpperCase();
-  return `${first}${last}`;
+  const cleanFirst = firstName.trim().slice(0, 2).toUpperCase().padEnd(2, 'X');
+  const cleanLast = lastName.trim().slice(0, 2).toUpperCase().padEnd(2, 'X');
+  return `${cleanFirst}${cleanLast}`;
+}
+
+export async function generateUniqueUsername(
+  firstName: string,
+  lastName: string
+): Promise<string> {
+  const baseUsername = generateUsername(firstName, lastName);
+  let username = baseUsername;
+  let suffix = 0;
+
+  while (
+    await prisma.user.findUnique({
+      where: { username },
+    })
+  ) {
+    suffix += 1;
+    username = `${baseUsername}${suffix}`;
+    if (suffix > 50) {
+      throw new Error('Konnte keinen eindeutigen Benutzernamen generieren');
+    }
+  }
+
+  return username;
 }
 
 export function canManageUser(

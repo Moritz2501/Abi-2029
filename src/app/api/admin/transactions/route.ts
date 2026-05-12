@@ -31,12 +31,12 @@ export async function GET() {
     const transactions = await prisma.transaction.findMany({
       include: {
         user: {
-          select: { email: true, firstName: true, lastName: true },
+          select: { username: true, firstName: true, lastName: true },
         },
         approvals: {
           include: {
             user: {
-              select: { email: true },
+              select: { username: true },
             },
           },
         },

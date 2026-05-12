@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 
 interface BurgerMenuProps {
@@ -10,6 +10,7 @@ interface BurgerMenuProps {
 }
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onToggle }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
 
@@ -94,6 +95,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onToggle }) => {
         animate={{ x: isOpen ? 0 : -400 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="fixed left-0 top-0 w-80 h-screen sidebar-glass z-35 overflow-y-auto"
+        style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       >
         <div className="p-8 pt-20">
           <div className="mb-8">
@@ -133,7 +135,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onToggle }) => {
                 <div className="glass-sm p-4">
                   <p className="text-xs text-white/60">Angemeldet als</p>
                   <p className="text-sm font-semibold text-white truncate">
-                    {session.user?.name || session.user?.email}
+                    {session.user?.name || session.user?.username}
                   </p>
                 </div>
                 <button
@@ -147,13 +149,15 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onToggle }) => {
                 </button>
               </div>
             ) : (
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => {
+                  router.push('/login');
+                  setIsOpen(false);
+                }}
                 className="btn-glass block w-full text-center text-sm"
               >
                 Anmelden
-              </Link>
+              </button>
             )}
           </div>
         </div>
@@ -169,13 +173,18 @@ interface NavLinkProps {
 }
 
 const NavLink: React.FC<NavLinkProps> = ({ href, onClick, children }) => {
+  const router = useRouter();
+
   return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="block p-3 rounded-xl hover:bg-white/5 transition-colors text-white/80 hover:text-white"
+    <button
+      type="button"
+      onClick={() => {
+        router.push(href);
+        onClick?.();
+      }}
+      className="block w-full text-left p-3 rounded-xl hover:bg-white/5 transition-colors text-white/80 hover:text-white"
     >
       {children}
-    </Link>
+    </button>
   );
 };

@@ -82,7 +82,7 @@ export default function DashboardPage() {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-5xl font-bold text-white mb-4">
-            Welcome, {session.user?.name || session.user?.email}! 👋
+            Welcome, {session.user?.name || session.user?.username}! 👋
           </h1>
 
           <div className="grid md:grid-cols-3 gap-6 mt-12">
@@ -96,7 +96,8 @@ export default function DashboardPage() {
               <h2 className="text-xl font-semibold text-white mb-4">Status</h2>
               <div className="space-y-3">
                 <p className="text-white/60">
-                  <span className="text-white font-semibold">E-Mail:</span> {session.user?.email}
+                  <span className="text-white font-semibold">Benutzername:</span>{' '}
+                  <span className="text-accent-purple">{session.user?.username}</span>
                 </p>
                 <p className="text-white/60">
                   <span className="text-white font-semibold">Rolle:</span>{' '}

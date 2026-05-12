@@ -4,18 +4,11 @@ import { hashPassword } from '@/lib/auth-utils';
 
 export async function POST() {
   try {
-    const rootAdminEmail = process.env.ROOT_ADMIN_EMAIL;
-
-    if (!rootAdminEmail) {
-      return NextResponse.json(
-        { message: 'ROOT_ADMIN_EMAIL nicht konfiguriert' },
-        { status: 400 }
-      );
-    }
+    const rootAdminUsername = process.env.ROOT_ADMIN_USERNAME || 'ROOT';
 
     // Check if root admin already exists
     const existingRootAdmin = await prisma.user.findUnique({
-      where: { email: rootAdminEmail },
+      where: { username: rootAdminUsername },
     });
 
     if (existingRootAdmin) {
@@ -25,27 +18,26 @@ export async function POST() {
       );
     }
 
-    // Create root admin with temporary password
     const tempPassword = Math.random().toString(36).slice(-12);
     const hashedPassword = await hashPassword(tempPassword);
 
     const rootAdmin = await prisma.user.create({
       data: {
-        email: rootAdminEmail,
+        username: rootAdminUsername,
         password: hashedPassword,
         firstName: 'Root',
         lastName: 'Admin',
-        username: 'ROOT',
+        name: 'Root Admin',
         role: 'ROOT',
         onboardingStatus: 'APPROVED',
       },
     });
 
     return NextResponse.json(
-      { 
+      {
         message: 'Root-Admin erstellt',
         user: rootAdmin,
-        tempPassword: tempPassword,
+        tempPassword,
         warning: 'Sichern Sie das temporäre Passwort!',
       },
       { status: 201 }

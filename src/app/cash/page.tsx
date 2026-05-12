@@ -14,7 +14,7 @@ interface Transaction {
   status: string;
   createdAt: string;
   user?: {
-    email: string;
+    username?: string;
     firstName?: string;
     lastName?: string;
   };

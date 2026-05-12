@@ -8,7 +8,7 @@ import { BurgerMenu } from '@/components/BurgerMenu';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,13 +20,21 @@ export default function LoginPage() {
 
     try {
       const result = await signIn('credentials', {
-        email,
+        username,
         password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError('E-Mail oder Passwort ungültig');
+        if (result.error.includes('Benutzername existiert nicht')) {
+          setError('Benutzername existiert nicht');
+        } else if (result.error.includes('noch nicht freigeschaltet')) {
+          setError('Dein Account wurde noch nicht freigeschaltet');
+        } else if (result.error.includes('abgelehnt')) {
+          setError('Dein Account wurde abgelehnt');
+        } else {
+          setError('Benutzername oder Passwort ungültig');
+        }
       } else if (result?.ok) {
         router.push('/dashboard');
       }
@@ -47,7 +55,6 @@ export default function LoginPage() {
         transition={{ duration: 0.3 }}
         className="glass-lg max-w-md w-full p-8 relative overflow-hidden"
       >
-        {/* Gradient Effects */}
         <div className="absolute top-0 right-0 w-40 h-40 bg-accent-purple/20 rounded-full blur-3xl -z-10" />
         <div className="absolute bottom-0 left-0 w-40 h-40 bg-accent-blue/20 rounded-full blur-3xl -z-10" />
 
@@ -72,13 +79,13 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-white/80 mb-2">
-                E-Mail
+                Benutzername
               </label>
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="deine@email.de"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Dein Benutzername"
                 className="input-glass"
                 disabled={isLoading}
                 required

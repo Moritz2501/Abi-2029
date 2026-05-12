@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       where: published ? { published: true } : undefined,
       include: {
         creator: {
-          select: { name: true, email: true },
+          select: { name: true },
         },
       },
       orderBy: { createdAt: 'desc' },

@@ -37,7 +37,6 @@ enum TransactionStatus {
 
 model User {
   id            String    @id @default(cuid())
-  email         String?   @unique
   name          String?
   firstName     String?
   lastName      String?
@@ -58,7 +57,6 @@ model User {
   pages         Page[]
   comments      Comment[]
 
-  @@index([email])
   @@index([username])
   @@index([role])
   @@index([onboardingStatus])

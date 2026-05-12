@@ -9,7 +9,6 @@ import { BurgerMenu } from '@/components/BurgerMenu';
 interface ProfileForm {
   firstName: string;
   lastName: string;
-  email: string;
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
@@ -21,7 +20,6 @@ export default function SettingsPage() {
   const [form, setForm] = useState<ProfileForm>({
     firstName: '',
     lastName: '',
-    email: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
@@ -39,7 +37,6 @@ export default function SettingsPage() {
         ...prev,
         firstName: (session.user as any).firstName || '',
         lastName: (session.user as any).lastName || '',
-        email: session.user.email || '',
       }));
     }
   }, [status, session, router]);
@@ -195,14 +192,14 @@ export default function SettingsPage() {
 
               <form onSubmit={handleProfileUpdate} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">E-Mail</label>
+                  <label className="block text-sm font-medium text-white/80 mb-2">Benutzername</label>
                   <input
-                    type="email"
-                    value={form.email}
+                    type="text"
+                    value={(session?.user?.username as string) || ''}
                     disabled
                     className="input-glass opacity-50"
                   />
-                  <p className="text-xs text-white/40 mt-1">E-Mail kann nicht geändert werden</p>
+                  <p className="text-xs text-white/40 mt-1">Benutzername kann nicht geändert werden</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
