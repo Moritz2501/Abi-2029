@@ -84,8 +84,8 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onToggle }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: isOpen ? 1 : 0 }}
         onClick={() => setIsOpen(false)}
-        className="fixed inset-0 bg-black/50 z-30 pointer-events-none"
-        pointerEvents={isOpen ? 'auto' : 'none'}
+        className="fixed inset-0 bg-black/50 z-30"
+        style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
       />
 
       {/* Sidebar */}

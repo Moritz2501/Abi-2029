@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/auth-utils';
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const rootAdminEmail = process.env.ROOT_ADMIN_EMAIL;
 

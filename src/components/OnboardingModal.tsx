@@ -49,7 +49,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: isOpen ? 1 : 0 }}
       className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
-      pointerEvents={isOpen ? 'auto' : 'none'}
+      style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}

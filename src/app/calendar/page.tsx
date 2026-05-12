@@ -104,13 +104,13 @@ export default function CalendarPage() {
                   <div key={`empty-${i}`} className="aspect-square" />
                 ))}
                 {days.map((day) => {
-                  const dateStr = new Date(
+                  const currentDate = new Date(
                     selectedDate.getFullYear(),
                     selectedDate.getMonth(),
                     day
-                  ).toISOString();
+                  );
                   const dayEvents = events.filter((e) =>
-                    e.date.startsWith(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day).toISOString().split('T')[0])
+                    e.date.startsWith(currentDate.toISOString().split('T')[0])
                   );
 
                   return (

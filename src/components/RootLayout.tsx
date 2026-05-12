@@ -1,13 +1,14 @@
 'use client';
 
-import React, { SessionProvider } from 'next-auth/react';
+import type { ReactNode } from 'react';
+import { SessionProvider } from 'next-auth/react';
 import { BurgerMenu } from '@/components/BurgerMenu';
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+export const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <SessionProvider>
       <div className="min-h-screen bg-dark-bg">

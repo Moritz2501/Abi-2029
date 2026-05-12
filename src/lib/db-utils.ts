@@ -1,8 +1,3 @@
-# Database Utilities
-
-Database Helper-Funktionen für häufige Operationen.
-
-```tsx
 import { prisma } from "@/lib/prisma";
 
 // User Management
@@ -46,4 +41,4 @@ export async function getStats() {
     totalCash: totalCash._sum.amount || 0,
   };
 }
-```
+

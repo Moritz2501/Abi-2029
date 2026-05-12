@@ -4,6 +4,8 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { prisma } from '@/lib/prisma';
 import { canManageUser, isRootAdmin } from '@/lib/auth-utils';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   request: NextRequest,
   { params }: { params: { userId: string } }

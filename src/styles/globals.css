@@ -106,7 +106,7 @@ body {
 
 /* Input Fields */
 .input-glass {
-  @apply w-full px-4 py-3 bg-glass-white/5 border border-white/15 rounded-2xl text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:shadow-gl focus:ring-2 focus:ring-accent-purple/30 transition-all duration-300;
+  @apply w-full px-4 py-3 bg-glass-white/5 border border-white/15 rounded-2xl text-white placeholder-white/40 focus:outline-none focus:border-white/30 focus:shadow-glass-glow-purple focus:ring-2 focus:ring-accent-purple/30 transition-all duration-300;
 }
 
 /* Scrollbar Styling */

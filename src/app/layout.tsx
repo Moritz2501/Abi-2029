@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { SessionProvider } from 'next-auth/react';
+import type { ReactNode } from 'react';
+import { Providers } from './providers';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="de" suppressHydrationWarning>
@@ -21,9 +22,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#0a0f1e" />
       </head>
       <body className="bg-dark-bg text-white">
-        <SessionProvider>
+        <Providers>
           {children}
-        </SessionProvider>
+        </Providers>
       </body>
     </html>
   );
